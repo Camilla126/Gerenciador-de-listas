@@ -14,6 +14,7 @@ import TodoItems from "./components/TodoItems.vue";
 import TodoFormAdd from "./components/TodoFormAdd.vue";
 import TodoSpinner from "./components/TodoSpinner.vue";
 import TodoEmpty from "./components/TodoEmpty.vue";
+import axios from "axios";
 
 export default {
   nome: "App",
@@ -22,6 +23,18 @@ export default {
     TodoEmpty,
     TodoFormAdd,
     TodoItems,
+  },
+
+  data() {
+    return {
+      todos: [],
+    };
+  },
+
+  created() {
+    this.todos = axios.get("https://localhost:3000/todos").then((response) => {
+      this.todos = response.data;
+    });
   },
 };
 </script>
