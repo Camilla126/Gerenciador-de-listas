@@ -1,10 +1,13 @@
 <template>
   <div class="px-3 py-10 md:px-10">
     <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
-      <TodoSpinner />
-      <TodoFormAdd />
-      <TodoItems />
-      <TodoEmpty />
+      <TodoSpinner v-if="loading" />
+
+      <template>
+        <TodoFormAdd />
+        <TodoItems />
+        <TodoEmpty />
+      </template>
     </div>
   </div>
 </template>
@@ -17,7 +20,7 @@ import TodoEmpty from "./components/TodoEmpty.vue";
 import axios from "axios";
 
 export default {
-  nome: "App",
+  name: "App",
   components: {
     TodoSpinner,
     TodoEmpty,
@@ -27,14 +30,20 @@ export default {
 
   data() {
     return {
-      todos: [],
+      loading: false,
     };
   },
 
   created() {
-    this.todos = axios.get("https://localhost:3000/todos").then((response) => {
-      this.todos = response.data;
-    });
+    this.loading = true;
+    axios
+      .get("http://localhost:3000/todos")
+      .then((response) => {
+        this.$store.commit("storeTodos", response.data);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   },
 };
 </script>
