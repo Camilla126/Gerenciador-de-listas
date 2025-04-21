@@ -28,8 +28,16 @@ export default createStore({
             .finally(() => {
               this.loading = false;
             });
-        }, 3000);
+        }, 100);
       });
+    },
+
+    addTodo(context, data) {
+      return axios
+        .post("http://localhost:3000/todos", data)
+        .then((response) => {
+          context.commit("storeTodos", [...context.state.todos, response.data]);
+        });
     },
   },
   modules: {},
