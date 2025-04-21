@@ -24,9 +24,6 @@ export default createStore({
             })
             .catch((error) => {
               console.error("Erro ao buscar dados:", error);
-            })
-            .finally(() => {
-              this.loading = false;
             });
         }, 100);
       });
@@ -34,10 +31,14 @@ export default createStore({
 
     addTodo(context, data) {
       return axios
-        .post("http://localhost:3000/todos", data)
+        .patch("http://localhost:3000/todos", data)
         .then((response) => {
           context.commit("storeTodos", [...context.state.todos, response.data]);
         });
+    },
+
+    updateTodo(context, { id, data }) {
+      return axios.patch(`http://localhost:3000/todos/${id}`, data);
     },
   },
   modules: {},
