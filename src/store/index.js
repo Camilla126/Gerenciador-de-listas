@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import axios from "axios";
 
 export default createStore({
   state: {
@@ -6,10 +7,30 @@ export default createStore({
   },
   getters: {},
   mutations: {
-    storeTodos(state, todos) {
-      state.todos = todos;
+    storeTodos(state, payload) {
+      state.todos = payload;
     },
   },
-  actions: {},
+  actions: {
+    getTodos({ commit }) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          return axios
+            .get("http://localhost:3000/todos")
+            .then((response) => {
+              console.log("Dados recebidos:", response.data);
+              commit("storeTodos", response.data);
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Erro ao buscar dados:", error);
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        }, 3000);
+      });
+    },
+  },
   modules: {},
 });
