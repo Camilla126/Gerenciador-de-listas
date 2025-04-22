@@ -1,38 +1,8 @@
 {
   "todos": [
     {
-      "id": "1",
-      "title": "Estudar javascriptçççç",
-      "completed": true
-    },
-    {
-      "id": "2",
-      "title": "Estudar Vuehhh",
-      "completed": false
-    },
-    {
-      "id": "3",
-      "title": "Estudar composition API",
-      "completed": false
-    },
-    {
       "id": "7307",
       "title": "Estudarrrrrrrrr",
-      "completed": false
-    },
-    {
-      "id": "cac9",
-      "title": "hellooooo",
-      "completed": false
-    },
-    {
-      "id": "9513",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "c7d5",
-      "title": "d",
       "completed": false
     },
     {

@@ -10,7 +10,24 @@ export default createStore({
     storeTodos(state, payload) {
       state.todos = payload;
     },
+
+    storeTodo(state, payload) {
+      const index = state.todos.findIndex((todo) => todo.id === payload.id);
+      if (index >= 0) {
+        state.todos.splice(index, 1, payload);
+      } else {
+        state.todos.push(payload);
+      }
+    },
+
+    delteTodo(state, id) {
+      const index = state.todos.findIndex((todo) => todo.id === id);
+      if (index >= 0) {
+        state.todos.splice(index, 1);
+      }
+    },
   },
+
   actions: {
     getTodos({ commit }) {
       return new Promise((resolve) => {
@@ -29,16 +46,28 @@ export default createStore({
       });
     },
 
-    addTodo(context, data) {
+    addTodo(commit, data) {
       return axios
         .patch("http://localhost:3000/todos", data)
         .then((response) => {
-          context.commit("storeTodos", [...context.state.todos, response.data]);
+          commit("storeTodos", [...state.todos, response.data]);
         });
     },
 
-    updateTodo(context, { id, data }) {
-      return axios.patch(`http://localhost:3000/todos/${id}`, data);
+    updateTodo(commit, { id, data }) {
+      return axios
+        .patch(`http://localhost:3000/todos/${id}`, data)
+        .then((response) => {
+          commit("storeTodos", response.data);
+        });
+    },
+
+    deleteTodo(commit, id) {
+      return axios
+        .delete(`http://localhost:3000/todos/${id}`)
+        .then((response) => {
+          commit("deleteTodo", id);
+        });
     },
   },
   modules: {},
