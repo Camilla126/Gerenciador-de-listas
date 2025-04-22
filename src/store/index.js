@@ -42,7 +42,7 @@ export default createStore({
             .catch((error) => {
               console.error("Erro ao buscar dados:", error);
             });
-        }, 30);
+        });
       });
     },
 

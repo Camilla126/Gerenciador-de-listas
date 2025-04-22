@@ -3,12 +3,12 @@
     {
       "id": "e2fd",
       "title": "r",
-      "completed": false
+      "completed": true
     },
     {
       "id": "7b4e",
       "title": "eee",
-      "completed": false
+      "completed": true
     }
   ]
 }
