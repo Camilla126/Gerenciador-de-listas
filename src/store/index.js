@@ -20,7 +20,7 @@ export default createStore({
       }
     },
 
-    delteTodo(state, id) {
+    deleteTodo(state, id) {
       const index = state.todos.findIndex((todo) => todo.id === id);
       if (index >= 0) {
         state.todos.splice(index, 1);
@@ -42,19 +42,19 @@ export default createStore({
             .catch((error) => {
               console.error("Erro ao buscar dados:", error);
             });
-        }, 100);
+        }, 30);
       });
     },
 
-    addTodo(commit, data) {
+    addTodo({ commit }, data) {
       return axios
-        .patch("http://localhost:3000/todos", data)
+        .post("http://localhost:3000/todos", data)
         .then((response) => {
           commit("storeTodos", [...state.todos, response.data]);
         });
     },
 
-    updateTodo(commit, { id, data }) {
+    updateTodo({ commit }, { id, data }) {
       return axios
         .patch(`http://localhost:3000/todos/${id}`, data)
         .then((response) => {
@@ -62,12 +62,10 @@ export default createStore({
         });
     },
 
-    deleteTodo(commit, id) {
-      return axios
-        .delete(`http://localhost:3000/todos/${id}`)
-        .then((response) => {
-          commit("deleteTodo", id);
-        });
+    deleteTodo({ commit }, id) {
+      return axios.delete(`http://localhost:3000/todos/${id}`).then(() => {
+        commit("deleteTodo", id);
+      });
     },
   },
   modules: {},
